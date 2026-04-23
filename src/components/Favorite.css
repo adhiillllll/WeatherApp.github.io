@@ -1,0 +1,18 @@
+.favorite-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-top: 15px;
+  align-self: stretch;
+}
+
+.favorite-icon {
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.favorite-icon:hover {
+  transform: scale(1.1);
+}

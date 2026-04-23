@@ -31,7 +31,12 @@
     border-radius: 50px;
     background: rgb(235, 255, 252);
     cursor: pointer;
-
+}
+.search-icon {
+    transition: transform 0.2s ease;
+}
+.search-icon:hover {
+    transform: scale(1.1);
 }
 
 

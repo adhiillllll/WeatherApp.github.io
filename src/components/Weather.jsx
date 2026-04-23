@@ -8,6 +8,8 @@ import rain_icon from '../assets/rain.png'
 import snow_icon from '../assets/snow.png'
 import humidity_icon from '../assets/humidity.png'
 import wind_icon from '../assets/wind.png'
+import Favorite from "./Favorite";
+import ErrorMsg from "./ErrorMsg";
 
 
 const Weather = () => {
@@ -15,6 +17,8 @@ const Weather = () => {
   const inputRef = useRef()
 
   const [weatherData , setWeatherData] = useState(false)
+
+  const [errorMsg, setErrorMsg] = useState(""); //from ErrorMsg
 
   const allIcons = {
     "01d" : clear_icon,
@@ -44,10 +48,12 @@ const Weather = () => {
       const response = await fetch(url)
       const data = await response.json()
 
-      if(!response.ok){
-        alert(data.message);
-        return;
+      if (!response.ok) {
+      setErrorMsg("City not found");   // error msg (UI)
+      setWeatherData(false);
+      return;
       }
+      setErrorMsg("");  //for UI update (react do not update setState)
 
       console.log(data);
       const icon = allIcons[data.weather[0].icon] || clear_icon;
@@ -75,8 +81,12 @@ const Weather = () => {
 
        <div className="search-bar">
         <input ref={inputRef} type="text" placeholder='search' />
-        <img src={search_icon} alt="search"  onClick={() => search(inputRef.current.value)}/>
+        <img src={search_icon} alt="search" className='search-icon' onClick={() => search(inputRef.current.value)}/>
        </div>
+
+       <ErrorMsg message={errorMsg} />
+
+       <Favorite />
 
        {weatherData?<>
        <img src={weatherData.icon} alt="sun" className='clear-weather'/>
