@@ -10,6 +10,7 @@ import humidity_icon from '../assets/humidity.png'
 import wind_icon from '../assets/wind.png'
 import Favorite from "./Favorite";
 import ErrorMsg from "./ErrorMsg";
+import { useNavigate } from "react-router-dom";
 
 
 const Weather = () => {
@@ -19,6 +20,29 @@ const Weather = () => {
   const [weatherData , setWeatherData] = useState(false)
 
   const [errorMsg, setErrorMsg] = useState(""); //from ErrorMsg
+
+  const navigate = useNavigate();
+
+  // save in favorite without repeating 
+  const saveToFavorites = () => {
+    if (!weatherData) return;
+
+   const city = weatherData.location;
+
+   const cityLower = city.trim().toLowerCase();
+
+   const existing = JSON.parse(localStorage.getItem("favorites")) || [];
+
+   const alreadyExists = existing
+      .map(c => c.toLowerCase())
+      .includes(cityLower);
+
+   if (!alreadyExists) {
+      existing.push(city);
+     localStorage.setItem("favorites", JSON.stringify(existing));
+   }
+   navigate("/favorites");
+  };
 
   const allIcons = {
     "01d" : clear_icon,
@@ -86,7 +110,7 @@ const Weather = () => {
 
        <ErrorMsg message={errorMsg} />
 
-       <Favorite />
+       <Favorite onClick={saveToFavorites} />
 
        {weatherData?<>
        <img src={weatherData.icon} alt="sun" className='clear-weather'/>
