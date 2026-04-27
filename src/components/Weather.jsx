@@ -11,6 +11,7 @@ import wind_icon from '../assets/wind.png'
 import Favorite from "./Favorite";
 import ErrorMsg from "./ErrorMsg";
 import { useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 
 const Weather = () => {
@@ -22,6 +23,9 @@ const Weather = () => {
   const [errorMsg, setErrorMsg] = useState(""); //from ErrorMsg
 
   const navigate = useNavigate();
+
+  const [searchParams] = useSearchParams();
+  const loc = searchParams.get("loc");
 
   // save in favorite without repeating 
   const saveToFavorites = () => {
@@ -97,8 +101,12 @@ const Weather = () => {
   }
 
   useEffect(() => {
-    search("kochi")
-  },[])
+  if (loc) {
+    search(loc);
+  } else {
+    search("london");
+  }
+  }, [loc]);
 
   return (
     <div className='weather'>
