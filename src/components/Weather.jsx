@@ -12,6 +12,8 @@ import Favorite from "./Favorite";
 import ErrorMsg from "./ErrorMsg";
 import { useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
+import celsius_icon from '../assets/celsius.png';
+import fahrenheit_icon from '../assets/fahrenheit.png';
 
 
 const Weather = () => {
@@ -19,8 +21,8 @@ const Weather = () => {
   const inputRef = useRef()
 
   const [weatherData , setWeatherData] = useState(false)
-
   const [errorMsg, setErrorMsg] = useState(""); //from ErrorMsg
+  const [unit, setUnit] = useState("C");
 
   const navigate = useNavigate();
 
@@ -86,13 +88,17 @@ const Weather = () => {
       console.log(data);
       const icon = allIcons[data.weather[0].icon] || clear_icon;
 
+      const tempC = Math.floor(data.main.temp);
+      const tempF = Math.round((tempC * 9/5) + 32);
+
       setWeatherData({
         humidity: data.main.humidity,
         windSpeed: data.wind.speed,
-        temperature: Math.floor(data.main.temp),
+        tempC: tempC,
+        tempF: tempF,
         location: data.name,
         icon: icon
-      })
+      });
 
     } catch (error) {
       setWeatherData(false);
@@ -122,7 +128,17 @@ const Weather = () => {
 
        {weatherData?<>
        <img src={weatherData.icon} alt="sun" className='clear-weather'/>
-       <p className='temperature'>{weatherData.temperature}°C</p>
+
+        <div className="temp-row">
+         <p className='temperature'>
+          {unit === "C"   ? `${weatherData.tempC}°C`   : `${weatherData.tempF}°F`}   </p>
+
+          <div  className="unit-btn"
+            onClick={() => setUnit(unit === "C" ? "F" : "C")} >
+           <img  src={unit === "C" ? fahrenheit_icon : celsius_icon}  alt="toggle"  />
+          </div>
+        </div>
+
        <p className='location'>{weatherData.location}</p>
        <div className="weather-data">
         <div className='col'>

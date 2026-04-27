@@ -1,5 +1,5 @@
 .weather {
-
+    position: relative;
     place-self: center ;
     padding: 40px;
     border-radius: 10px;
@@ -46,7 +46,7 @@
 }
 .temperature {
     color: rgb(255, 255, 255);
-    font-size: 60px;
+    font-size: 57px;
     line-height: 1;
 }
 .location {
@@ -76,3 +76,42 @@
     margin-top: 10px;
 }
 
+.temp-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.unit-icon {
+  width: 28px;   
+  height: 28px;  
+  object-fit: contain;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+}
+
+.unit-icon:hover {
+  transform: scale(1.1);
+}
+.unit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background: rgb(250, 187, 251);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.unit-btn:hover {
+  transform: scale(1.1);
+}
+
+.unit-btn img {
+  width: 20px;
+  height: 20px;
+}

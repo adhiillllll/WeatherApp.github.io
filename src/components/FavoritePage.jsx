@@ -48,7 +48,6 @@ const FavoritePage = () => {
         <img  src={delete_icon}  alt="delete"  className="icon"
          onClick={() => removeFavorite(city)} />
 
-
       </div>
         ))
       )}
